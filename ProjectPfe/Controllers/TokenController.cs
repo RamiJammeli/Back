@@ -141,6 +141,15 @@ namespace JWTAuth.WebApi.Controllers
             return User;
         }
 
+        [HttpPut(Name = "UpdateUser")]
+        [Route("UpdateUser")]
+        public Boolean UpdateUser(User user)
+        {
+           
+            _context.Update(user.Id,user);
+            return true;
+
+        }
 
 
     }

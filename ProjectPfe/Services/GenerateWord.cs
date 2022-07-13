@@ -54,5 +54,29 @@ namespace ProjectPfe.Services
            
 
         }
-    }
+
+        public static string convertToPdfTemplate(String idtemplatertf , String filename, GridFsStockTemplate gridFsStockTemplate)
+        {
+            Stream filetoconvert = gridFsStockTemplate.GetFile(new ObjectId(idtemplatertf));
+            Spire.Doc.Document doc = new Spire.Doc.Document(filetoconvert);
+            doc.SaveToFile(Directory.GetCurrentDirectory() + "/" + filename + ".pdf", Spire.Doc.FileFormat.PDF);
+
+            doc.Dispose();
+            string idfile = "";
+
+            using (Stream fileStream = new FileStream(Directory.GetCurrentDirectory() + "/" + filename + ".pdf", FileMode.Open, FileAccess.Read))
+            {
+                idfile = gridFsStockTemplate.AddFile(fileStream, filename + ".pdf").ToString();
+
+            }
+
+            File.Delete(Directory.GetCurrentDirectory() + "/" + filename + ".pdf");
+            doc.Close();
+            return idfile;
+        }
+
+
+    
+
+}
 }

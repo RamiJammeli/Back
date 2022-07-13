@@ -51,7 +51,7 @@ namespace ProjectPfe.Controllers
 
         [HttpPost(Name = "AddTemplate")]
         [Route("AddTemplate/{idcategorie}")]
-        public List<TemplateWord> AddTemplate(string idcategorie, [FromForm] IFormFile[] files)
+        public List<TemplateWord> AddTemplate(string idcategorie, [FromForm] IFormFile file)
         {
 
             Categorie c = categorieService.Get(idcategorie);
@@ -62,20 +62,21 @@ namespace ProjectPfe.Controllers
             templateWord.categorie = c;
 
 
-            foreach (var file in files)
-            {
+            
                
-                var objectIdFile = gridFsStockTemplate.UploadFile(file);
+                var objectIdFileRtf = gridFsStockTemplate.UploadFile(file);
 
                 templateWord.Nom = "Template_" + file.FileName.Replace(".pdf", "").Replace(".rtf","");
 
-                if (file.FileName.Contains(".rtf"))
-                templateWord.FileRtfId = objectIdFile.ToString();
-                else
-                    templateWord.FilePdfId = objectIdFile.ToString();
+               
+                templateWord.FileRtfId = objectIdFileRtf.ToString();
 
-                
-            }
+
+            
+                    templateWord.FilePdfId = GenerateWord.convertToPdfTemplate(objectIdFileRtf.ToString(), templateWord.Nom, gridFsStockTemplate); 
+
+
+
             templateWordService.Create(templateWord);
 
             return templateWordService.Get();
