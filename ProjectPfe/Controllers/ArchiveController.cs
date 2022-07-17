@@ -128,6 +128,10 @@ namespace ProjectPfe.Controllers
             {
                 integrations=integrationService.GetArchiveStep2ByUser();
             }
+            else if (step == 3)
+            {
+                integrations = integrationService.GetArchiveStep3ByUser();
+            }
             else
             {
                 integrations= integrationService.Getbyuser(UserConnected.user.Id);
