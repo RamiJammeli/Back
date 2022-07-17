@@ -70,6 +70,16 @@ namespace ProjectPfe.Controllers
 
         }
 
+        [HttpGet(Name = "AllArchivesStep2Admin")]
+        [Route("AllArchivesStep2Admin")]
+        public List<Integration> AllArchivesStep2Admin()
+        {
+
+            List<Integration> integrations = integrationService.GetArchiveStep2GroupCorilus();
+
+            return integrations;
+
+        }
 
         [HttpGet(Name = "AllArchivesStep3Admin")]
         [Route("AllArchivesStep3Admin")]
